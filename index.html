@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>自我介绍</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .shell {
+            max-width: 400px;
+            width: 100%;
+            min-height: 300px;
+            /*border: 1px solid #000;*/
+            /*border-radius: 5px;*/
+            font-size: 15px;
+            color: #828282;
+            overflow: hidden;
+            font: monospace;
+            border-radius: 5px;
+            box-shadow: 0 0 3px rgba(136, 136, 136, 0.73);
+        }
+
+        .header {
+            width: 100%;
+            height: 25px;
+            line-height: 25px;
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            background-color: #d1d2d7;
+        }
+
+        .header div {
+            flex: 1;
+            align-items: center;
+        }
+
+        .header div:first-child {
+            padding-left: 10px;
+            box-sizing: border-box;
+            align-items: center;
+            justify-content: flex-start;
+            align-content: center;
+            justify-items: center;
+            display: flex;
+        }
+
+        .circle {
+            height: 12px;
+            width: 12px;
+            display: inline-block;
+            background-color: red;
+            margin: 0 3px;
+            border-radius: 50%;
+            box-sizing: border-box;
+            border: 1px solid #d1d2d7;
+        }
+
+        img {
+            width: 80px;
+            height: auto;
+            vertical-align: top;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0
+            }
+        }
+
+        @keyframes caret {
+            50% {
+                border-right-color: transparent;
+            }
+        }
+
+        h1 {
+            font: bold 200% Consolas, Monaco, monospace;
+            width: 20ch;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: .05em solid;
+            animation: typing 2s steps(20),
+            caret 1s steps(1) infinite;
+        }
+
+        .bold, .tab {
+            font-weight: bold;
+        }
+
+        .tab {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+<div class="shell">
+    <div class="header">
+        <div>
+            <span class="circle" style="background-color: #f96057"></span>
+            <span class="circle" style="background-color: #fcbd2d"></span>
+            <span class="circle" style="background-color: #35c940"></span>
+        </div>
+        <div>编辑器</div>
+        <div></div>
+    </div>
+    <span>&gt;</span>
+    <span class="text"></span>
+    <i class="cursor" style="display: none; border-right:6px solid #30ad23;"></i>
+    <audio id="myaudio" src="bg.mp3" controls="controls" autostart="false" loop="false" hidden="true" ></audio>
+</div>
+<!--<h1>test test test test.</h1>-->
+<script>
+    const $ = attr => document.querySelector(attr);
+    const textDom = $('.text');
+    const cursorDom = $('.cursor');
+    const shell = $('.shell');
+    let audio = document.getElementById('myaudio');
+    let timer;
+    let cursonTimer;
+    let time;
+    const input = (text) => {
+        time = new Date().getTime();
+        const textArr = text.split('');
+        let index = 0;
+
+        const auto = () => {
+            cursorDom.style.display = 'inline';
+            clearInterval(cursonTimer);
+            let showText = textArr.slice(0, index).join('')
+                .replace(/<\/br>/ig, '</br>> ')
+                .replace(/<span\sclass\=\"js\">([^\/]*)<\/span>/ig, '\<span style="color: #415caa"\>$1\<\/span\>')
+                .replace(/<span\sclass\=\"tab\">(.*)<\/span>/ig, '\<span style="margin-left: 2em" \>$1\<\/span\>')
+                .replace(/<span\sclass\=\"fun\">([^\/]*)<\/span>/ig, '\<span style="color: #de5d52"\>$1\<\/span\>');
+
+            if (/xx秒/.test(showText)) {
+                showText = showText.replace('xx秒', `${parseInt((new Date().getTime() - time) / (1000))}秒`)
+            }
+
+            textDom.innerHTML = showText;
+            timer = setTimeout(auto, 100);
+            if (/;$/.test(showText)) {
+                clearTimeout(timer);
+                timer = setTimeout(auto, 2000);
+                cursonTimer = setInterval(() => {
+                    if (cursorDom.style.display === 'none') {
+                        cursorDom.style.display = 'inline';
+                    } else {
+                        cursorDom.style.display = 'none';
+                    }
+                }, 500);
+            }
+            if (/#000$/.test(showText)) {
+                shell.style.backgroundColor = '#000';
+            }
+            ;
+            if (/#ffda23$/.test(showText)) {
+                shell.style.color = '#ffda23';
+            }
+            if (/10px$/.test(showText)) {
+                shell.style.fontSize = '10px';
+            }
+            if (/🎵$/.test(showText)) {
+                audio.play();
+            }
+
+            if (/\.{6}$/.test(showText)) {
+                clearTimeout(timer);
+                timer = setTimeout(auto, 2000);
+                cursonTimer = setInterval(() => {
+                    if (cursorDom.style.display === 'none') {
+                        cursorDom.style.display = 'inline';
+                    } else {
+                        cursorDom.style.display = 'none';
+                    }
+                }, 500);
+                const remark = $('.remark');
+                remark.style.color = '#ffda23';
+                shell.style.color = '#ffda23';
+            }
+            var current = text.substr(index, 1);
+            if (current === '<') {
+                index = text.indexOf('>', index) + 1;
+            }
+            else {
+                index++;
+            }
+            if (index > textArr.length) {
+                clearTimeout(timer);
+                cursonTimer = setInterval(() => {
+                    if (cursorDom.style.display === 'none') {
+                        cursorDom.style.display = 'inline';
+                    } else {
+                        cursorDom.style.display = 'none';
+                    }
+                }, 500);
+            }
+            ;
+        }
+
+        timer = setTimeout(auto, 100);
+    }
+    const loadImage = () => {
+        const remark = $('.remark');
+        const shell = $('.shell');
+        remark.style.color = '#fff';
+        shell.style.color = '#fff';
+    }
+
+
+    input(`
+        <span class="js">console.log("大家好");</span></br>
+        <span class="js">const</span> i =
+        <span class="bold" style="color: #0f4f3f">{</span><br/>
+        <span class="tab"><span style="color: #700b7e">"姓名"</span>: <span style="color: #1f8300">"洪承金",</span></span><br/>
+        <span class="tab"><span style="color: #700b7e">"爱好"</span>: <span style="color: #1f8300">["🗺", "🏃", "🤔"],</span></span><br/>
+        <span class="tab"><span style="color: #700b7e">"职业"</span>: <span style="color: #1f8300">"IT"</span></span><br/>
+        <span class="bold" style="color: #0f4f3f;margin-left: .5em">};</span></br>
+        <span class="remark">// emmm 好像有点亮了? 让我把背景色调一下#000;</span></br>
+        <span class="remark">// 还是不好看，字体颜色设成</span><span style="color: #ffda23">橙黄色#ffda23</span>;</br>
+        <span class="remark">// 再改一下字体大小，改为10px;</span></br>
+        <span class="remark">// 再来点🎵;</span></br>
+        <span class="remark">// =͟͟͞͞( •̀д•́) 哇！我已经水了xx秒了🤪;</span></br>
+        <span>准备，开始爆照了;</span></br>
+        <span class="remark">3</span></br>
+        <span class="remark">2</span></br>
+        <span class="remark">1</span></br>
+        <span><img src="tup.jpeg" onload="loadImage()"></span></br>
+        <span>再见👋</span>
+        `);
+</script>
+</body>
+
+</html>
