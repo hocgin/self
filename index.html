@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="css/fontello.min.css">
+<link rel="stylesheet" href="css/app.css">
 
 <head>
     <title>自我介绍</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        .shell {
+        .container {
             max-width: 400px;
+            width: 100%;
+        }
+        .shell {
+            height: 100%;
             width: 100%;
             min-height: 300px;
             /*border: 1px solid #000;*/
@@ -93,25 +99,33 @@
         .tab {
             font-weight: bold;
         }
+        .copy {
+
+        }
     </style>
 </head>
 
 <body>
-<div class="shell">
-    <div class="header">
-        <div>
-            <span class="circle" style="background-color: #f96057"></span>
-            <span class="circle" style="background-color: #fcbd2d"></span>
-            <span class="circle" style="background-color: #35c940"></span>
+<div class="container">
+    <div class="shell">
+        <div class="header">
+            <div>
+                <span class="circle" style="background-color: #f96057"></span>
+                <span class="circle" style="background-color: #fcbd2d"></span>
+                <span class="circle" style="background-color: #35c940"></span>
+            </div>
+            <div>编辑器</div>
+            <div></div>
         </div>
-        <div>编辑器</div>
-        <div></div>
+        <span>&gt;</span>
+        <span class="text"></span>
+        <i class="cursor" style="display: none; border-right:6px solid #30ad23;"></i>
     </div>
-    <span>&gt;</span>
-    <span class="text"></span>
-    <i class="cursor" style="display: none; border-right:6px solid #30ad23;"></i>
-    <audio id="myaudio" src="bg.mp3" controls="controls" autostart="false" loop="false" hidden="true" ></audio>
+    <div class="copy">
+        <a href="http://self.hocg.in/" class="link">http://self.hocg.in/</a>
+    </div>
 </div>
+<audio id="myaudio" src="bg.mp3" controls="controls" autostart="false" loop="false" hidden="true"></audio>
 <!--<h1>test test test test.</h1>-->
 <script>
     const $ = attr => document.querySelector(attr);
@@ -219,10 +233,10 @@
         <span class="tab"><span style="color: #700b7e">"爱好"</span>: <span style="color: #1f8300">["🗺", "🏃", "🤔"],</span></span><br/>
         <span class="tab"><span style="color: #700b7e">"职业"</span>: <span style="color: #1f8300">"IT"</span></span><br/>
         <span class="bold" style="color: #0f4f3f;margin-left: .5em">};</span></br>
+        <span class="remark">// 来点 <i class="heartbeat">🎵</i>;</span></br>
         <span class="remark">// emmm 好像有点亮了? 让我把背景色调一下#000;</span></br>
         <span class="remark">// 还是不好看，字体颜色设成</span><span style="color: #ffda23">橙黄色#ffda23</span>;</br>
         <span class="remark">// 再改一下字体大小，改为10px;</span></br>
-        <span class="remark">// 再来点🎵;</span></br>
         <span class="remark">// =͟͟͞͞( •̀д•́) 哇！我已经水了xx秒了🤪;</span></br>
         <span>准备，开始爆照了;</span></br>
         <span class="remark">3</span></br>
